@@ -15,7 +15,7 @@ def createCorpora(data):
     return result
 
 if __name__ == '__main__':
-    f = open(r"C:\Users/\/fenum\Desktop\progetto nlp\smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
+    f = open(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
     data = json.load(f)
 
     dict_forLabel = createCorpora(data)
