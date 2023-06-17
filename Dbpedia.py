@@ -4,15 +4,20 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import PreProcessing as pr
+import Question
 
 def createCorpora(data):
     result = {}
+    min=5000
+
     for item in data:
+        key=""
         for type in item['type']:
-            if type in result:
-                result[type] = result[type]+" "+item['question']
-            else:
-                result[type] = item['question']
+            key=key+" "+type
+        if key in result:
+            result[key] = result[key]+" "+item['question']
+        else:
+            result[key] = item['question']
 
     for el in result:
         result[el]=pr.PreProcessing(result[el])
@@ -37,7 +42,6 @@ if __name__ == '__main__':
     data = json.load(f)
 
     dict_forLabel = createCorpora(data)
-    print(list(dict_forLabel.keys()))
 
     fit=CreateFit(dict_forLabel)
     model=NaiveBayesClassification(dict_forLabel,fit)
@@ -58,7 +62,15 @@ if __name__ == '__main__':
             new_obs = fit.transform(sentences)
             pred=model.predict(new_obs)[0]
 
-        if pred in item['type']:
+        pred_vet=pred.split(" ")
+        correct=True
+
+        pred_vet.remove(pred_vet[0])
+        for s in pred_vet:
+            if not s in item['type']:
+                correct=False
+
+        if correct:
             num_corretti += 1
         else:
             list_errori[item['question']]=(pred,item['type'])
