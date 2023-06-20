@@ -8,20 +8,12 @@ import Question
 
 def createCorpora(data):
     result = {}
-    min=5000
-
     for item in data:
-        key=""
         for type in item['type']:
-            key=key+" "+type
-        if key in result:
-            result[key] = result[key]+" "+item['question']
-        else:
-            result[key] = item['question']
-
-    for el in result:
-        result[el]=pr.PreProcessing(result[el])
-
+            if type in result:
+                result[type] = result[type]+" "+item['question']
+            else:
+                result[type] = item['question']
     return result
 
 def CreateFit(dict_for_label):
@@ -38,10 +30,17 @@ def NaiveBayesClassification(dict_forLabel,fit):
     return clf.fit(x,y)
 
 if __name__ == '__main__':
+    print('ciao')
     f = open(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
-    data = json.load(f)
+    data=json.load(f) #json originale sempre utilizzato
+
+    #CAMPIONAMENTO
+    data=(pr.DistinctLabel(data))
+    #df = pd.DataFrame.from_dict(data, orient='columns')
+    #pr.Sampling(df.values)
 
     dict_forLabel = createCorpora(data)
+    print(list(dict_forLabel.keys()))
 
     fit=CreateFit(dict_forLabel)
     model=NaiveBayesClassification(dict_forLabel,fit)
@@ -49,6 +48,9 @@ if __name__ == '__main__':
     num_corretti=0
     list_errori={}
     for item in data[0:100]:
+        sentences=[item['question']]
+        new_obs = fit.transform(sentences)
+        pred=model.predict(new_obs)[0]
         sentences=[pr.PreProcessing(item['question'])]
 
         skip_prediction=False
@@ -62,22 +64,14 @@ if __name__ == '__main__':
             new_obs = fit.transform(sentences)
             pred=model.predict(new_obs)[0]
 
-        pred_vet=pred.split(" ")
-        correct=True
-
-        pred_vet.remove(pred_vet[0])
-        for s in pred_vet:
-            if not s in item['type']:
-                correct=False
-
-        if correct:
+        if pred in item['type']:
             num_corretti += 1
         else:
+            list_errori[item["question"]]=(pred,item['type'])
             list_errori[item['question']]=(pred,item['type'])
 
     print(str(num_corretti/100))
     print(list_errori)
-    f.close()
 
 
 
