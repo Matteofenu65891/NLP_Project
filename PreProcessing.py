@@ -73,3 +73,26 @@ def tokenization(text):
     word_list2 = re.findall(r'\w+', text)
 
     return word_list2
+
+def createCorpora(data):
+    result = {}
+    for item in data:
+        for type in item['type']:
+            if type in result:
+                result[type] = result[type]+" "+item['question']
+            else:
+                result[type] = item['question']
+
+    max_len=1000
+    min_len=1000
+
+    for type in result:
+        if len(result[type]) < min_len:
+            min_len=len(result[type])
+        if len(result[type]) > max_len:
+            max_len = len(result[type])
+
+    for type in result:
+        if not len(result[type])<500:
+            result[type]=result[type][:500]
+    return result
