@@ -5,6 +5,8 @@ from imblearn.over_sampling import SMOTE
 from collections import Counter
 from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedShuffleSplit
+from rdflib import Graph, URIRef, RDF, RDFS
 
 auxiliary_verbs = ['is', 'am', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does',
                    'did', 'can', 'could',
@@ -50,24 +52,6 @@ def DistinctLabel(data):
             result.append(new_item)
     return result
 
-def Sampling(data):
-    # split into input and output elements
-    X, y = data[:, :-1], data[:, -1]
-    # label encode the target variable
-    y = LabelEncoder().fit_transform(y)
-    # transform the dataset
-    strategy = {0: 100, 1: 100, 2: 200, 3: 200, 4: 200, 5: 200}
-    oversample = SMOTE(sampling_strategy=strategy)
-    X, y = oversample.fit_resample(X, y)
-    # summarize distribution
-    counter = Counter(y)
-    for k, v in counter.items():
-        per = v / len(y) * 100
-        print('Class=%d, n=%d (%.3f%%)' % (k, v, per))
-    # plot the distribution
-    pyplot.bar(counter.keys(), counter.values())
-    pyplot.show()
-
 def tokenization(text):
     text = text.lower()
     word_list2 = re.findall(r'\w+', text)
@@ -96,3 +80,26 @@ def createCorpora(data):
         if not len(result[type])<500:
             result[type]=result[type][:500]
     return result
+
+def StratifiedSampling(data,target,sample_size):
+    splitter = StratifiedShuffleSplit(n_splits=1, test_size=sample_size)
+    train_indices, _ = splitter.split(data, target).__next__()
+
+    sampled_data = [data[i] for i in train_indices]
+
+    return sampled_data
+
+def GetDictionaryOfTypesWithFrequency(types):
+    result={}
+    for element in types:
+        for type in element:
+            if type in result:
+                result[type]+=1
+            else:
+                result[type]=1
+
+    for el in result:
+        result[el]=(result[el]/len(types))*100
+
+    return result
+
