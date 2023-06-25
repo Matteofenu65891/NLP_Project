@@ -49,7 +49,9 @@ def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 61% sul 
 def FindMoreSpecifiedType(chiavi_cercate,dizionario):
     valore_minimo = None
     result=None
-    result=min(dizionario.keys() & chiavi_cercate, key=dizionario.get)
+    result = min(dizionario.keys() & chiavi_cercate, key=dizionario.get)
+
+
     return result
 
 if __name__ == '__main__':
@@ -62,24 +64,34 @@ if __name__ == '__main__':
     for item in dataset.question:
         item=pr.CleanText(item)
 
-    X = dataset.question
+    #X = dataset.question
+    #y = dataset.type
+    dict_l= pr.GetDictionaryOfTypesWithFrequency(dataset.type) #dizionario tipo,frequenza
+    dict_l=dict(sorted(dict_l.items(), key=lambda x: x[1]))
+    elementi_inconsistenti = {key: val for key, val in dict_l.items() if val == 0.002727024815925825}
+
+    for index,records in dataset.iterrows():
+        tipi=records.type
+        for label in elementi_inconsistenti:
+            if label in tipi:
+                records.type.remove(label)
+
+    dataset = dataset[dataset['type'].apply(lambda x: len(x) != 0)]
     y = dataset.type
-    dict= pr.GetDictionaryOfTypesWithFrequency(y) #dizionario tipo,frequenza
+    X=dataset.question
+    counter=0
 
 
     #per ogni label di classe,tengo il tipo più specifico (frequenza minore)
-    i=0
-    for item in y:
-       y[i]=FindMoreSpecifiedType(item,dizionario=dict)
-       i+=1
-
+    for index, value in y.iteritems():
+        y[index]=FindMoreSpecifiedType(value,dizionario=dict_l)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
     # Creazione dell'istanza del RandomUnderSampler
     fit=cl.CreateFit(X_train)
     nb=LogisticRegressionModel(X_train,y_train)
-    y_pred= nb.predict(X_train)
-    accuracy = accuracy_score(y_train, y_pred)
+    y_pred= nb.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
     accuracy_percent = accuracy * 100
     print('accuracy %s' % accuracy_percent)
 
