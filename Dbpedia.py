@@ -31,7 +31,7 @@ def LinearSupportVectorMachine(X_train,y_train):
 
     return sgd
 
-def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 61% sul test set e 99% sul training
+def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 71% sul test set e 99% sul training
     logreg = Pipeline([('vect', CountVectorizer()),
                        ('tfidf', TfidfTransformer()),
                        ('clf', LogisticRegression(n_jobs=1, C=1e5)),
@@ -84,12 +84,12 @@ def pruningLabelInconsistenti(dataset,treshold):
 
 if __name__ == '__main__':
 
-    #CODICE PER ELABORARE IL DATASET
-    """dataset = getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
+    """#CODICE PER ELABORARE IL DATASET
+    dataset = getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
     #pulizia del testo delle domande
 
-    for item in dataset.question:
-        item=pr.CleanText(item)
+    for index, record in dataset.iterrows():
+        dataset.question[index]=pr.CleanText(record.question)
 
     treshold=1.5
     dataset=pruningLabelInconsistenti(dataset,treshold)
@@ -100,9 +100,9 @@ if __name__ == '__main__':
     dataset=trovaLabelSpecifiche(dataset)
     
     #SALVATAGGIO DATASET ELABORATO SU FILE
-    salvaDatasetLavoratoSuFile(dataset,'dataTypeSpecifici.csv')"""
+    #salvaDatasetLavoratoSuFile(dataset,'dataTypeSpecifici.csv')"""
 
-    # CODICE PER LEGGERE UN DATASET GIA ELABORATO
+    #CODICE PER LEGGERE UN DATASET GIA ELABORATO
     dataset=leggiDatasetDaFile('dataTypeSpecifici.csv')
 
     X_train, X_test, y_train, y_test = train_test_split(dataset.question, dataset.type, test_size=0.33, random_state=42)

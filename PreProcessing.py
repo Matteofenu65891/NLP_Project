@@ -16,7 +16,7 @@ auxiliary_verbs = ['is', 'am', 'are', 'was', 'were', 'been', 'being', 'have', 'h
                    'shall', 'should', 'will', 'would', 'may', 'might', 'must', 'dare', 'need', 'used to', 'ought to']
 
 stopwords = set(STOP_WORDS)
-RE_SPECIAL_CHAR = re.compile('[/(){}\[\]\|@,;]')
+RE_SPECIAL_CHAR = re.compile('[/(){}\[\]|@,;?!.]')
 RE_BAD_SYMBOLS = re.compile('[^0-9a-z #+_]')
 
 
