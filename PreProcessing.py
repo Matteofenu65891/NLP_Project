@@ -1,3 +1,4 @@
+import json
 import re
 import nltk
 from spacy.lang.en.stop_words import STOP_WORDS
@@ -6,7 +7,9 @@ from collections import Counter
 from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
-from rdflib import Graph, URIRef, RDF, RDFS
+import Specificita as sp
+
+
 
 auxiliary_verbs = ['is', 'am', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does',
                    'did', 'can', 'could',
@@ -102,4 +105,26 @@ def GetDictionaryOfTypesWithFrequency(types):
         result[el]=(result[el]/len(types))*100
 
     return result
+
+
+#Funzione che prende una lista di tipi e restituisce il più specifico in base alla specificità dettata dall'ontologia
+#Necessita di un file contenente l'ontologia elaborata (far partire il main nel file Specificita per elaborare il file passato tramite percorso)
+def getTipoSpecifico(tipi,type_hierarchy):
+
+
+    urlTipi=[]
+    for tipo in tipi:
+        if(tipo != "number" and tipo != "string" and tipo != "date" and tipo != "boolean"):
+            tipo = tipo[4:]
+        urlTipi.append("http://dbpedia.org/ontology/"+tipo)
+    orderedList = sp.sort_types(urlTipi,type_hierarchy)
+    #print(orderedList)
+    orderedList.sort(key=sorter,reverse=True)
+    mostSpecific=orderedList[0]['key']
+    mostSpecific=mostSpecific.split('/')[-1]
+    mostSpecific="dbo:"+mostSpecific
+    return mostSpecific
+
+def sorter(e):
+    return e['num']
 
