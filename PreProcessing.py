@@ -123,7 +123,7 @@ def getTipoSpecifico(tipi,type_hierarchy):
     mostSpecific=orderedList[0]['key']
     mostSpecific=mostSpecific.split('/')[-1]
     mostSpecific="dbo:"+mostSpecific
-    return mostSpecific
+    return mostSpecific.replace("dbo:","")
 
 def sorter(e):
     return e['num']
