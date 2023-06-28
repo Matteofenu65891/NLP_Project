@@ -97,18 +97,23 @@ if __name__ == '__main__':
 
     """#CODICE PER ELABORARE IL DATASET"""
     dataset = getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
+    testset=getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-test-risposte.json")
     #pulizia del testo delle domande
 
     for index, record in dataset.iterrows():
         dataset.question[index]=pr.CleanText(record.question)
+    for index, record in testset.iterrows():
+        testset.question[index]=pr.CleanText(record.question)
 
     treshold=1.5
     dataset=pruningLabelInconsistenti(dataset,treshold)
+    testset=pruningLabelInconsistenti(testset,treshold)
 
     #CAMPIONAMENTO
     dataset.sample()
 
     dataset=trovaLabelSpecifiche(dataset)
+    testset=trovaLabelSpecifiche(testset)
     #TokenizeQuestions(dataset)
     #SALVATAGGIO DATASET ELABORATO SU FILE
     #salvaDatasetLavoratoSuFile(dataset,'dataTypeSpecifici.csv')"""
@@ -117,17 +122,19 @@ if __name__ == '__main__':
     #dataset=leggiDatasetDaFile('dataTypeSpecifici.csv')
     feature_extraction = TfidfVectorizer()
     X = feature_extraction.fit_transform(dataset["question"].values)
+    Y = feature_extraction.fit_transform(testset["question"].values)
 
-    X_train, X_test, y_train, y_test = train_test_split(Xencoded, dataset.type, test_size=0.15, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X, dataset.type, test_size=0.15, random_state=42)
     # Creazione dell'istanza del RandomUnderSampler
     #fit=cl.CreateFit(X_train)
     #clf = SVC(probability=True, kernel='rbf')
     #clf.fit(X_train, y_train)
     model = LinearSVC(tol=1.0e-6, verbose=1)
-    model.fit(X_train, y_train)
+    #model.fit(X_train, y_train)
+    model.fit(X, dataset.type)
     #nb = LogisticRegressionModel(X_train, y_train)
-    y_pred= model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
+    y_pred= model.predict(Y)
+    accuracy = accuracy_score(testset.type, y_pred)
     accuracy_percent = accuracy * 100
     print('accuracy %s' % accuracy_percent)
 
