@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.svm import SVC
 from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
+from sklearn.svm import LinearSVC
 
 def CreateFit(x):
     vectorizer=CountVectorizer()
@@ -28,3 +29,9 @@ def PenalizedSVM(dict_forLabel, fit):
     svc_model.fit(x,y)
 
     return svc_model
+
+def LinearSVCModel(X,Y):
+    model = LinearSVC(tol=1.0e-6, verbose=1)
+    model.fit(X, Y)
+    print("Modello creato")
+    return model

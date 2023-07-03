@@ -8,89 +8,47 @@ from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
 import Specificita as sp
+from nltk.stem import PorterStemmer
 
 
-
+#CONTSTANT
 auxiliary_verbs = ['is', 'am', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does',
                    'did', 'can', 'could',
                    'shall', 'should', 'will', 'would', 'may', 'might', 'must', 'dare', 'need', 'used to', 'ought to']
-
 stopwords = set(STOP_WORDS)
 RE_SPECIAL_CHAR = re.compile('[/(){}\[\]|@,;?!.]')
 RE_BAD_SYMBOLS = re.compile('[^0-9a-z #+_]')
+CONTRACTION_DICT = {"ain't": "are not","'s":" is","aren't": "are not"}
+
+#REGEX
+contractions_re=re.compile('(%s)' % '|'.join(CONTRACTION_DICT.keys()))
+
+#full pre-processing dataset
+def PreProcessingFullTrainSet(dataset):
+    #puliza delle domande
+    for index, record in dataset.iterrows():
+        dataset.question[index]=pr.CleanText(record.question)
 
 
-# puliamo il testo da caratteri speciali, altri caratteri
+#Procedure for expand contractions
+def expand_contractions(text,contractions_dict=CONTRACTION_DICT):
+    def replace(match):
+        return contractions_dict[match.group(0)]
+    return contractions_re.sub(replace, text)
+
+#Stemming
+def stem_words(text):
+    return " ".join([stemmer.stem(word) for word in text.split()])
+
+#Full pre-processing single question: expand contractions, lower case, remove punctuations, remove words and digit containing digits, remove stop words, stemming
 def CleanText(text):
     text = text.lower()
     text = RE_SPECIAL_CHAR.sub(' ', text)  # sostituiamo caratteri speciali con spazi
     text = RE_BAD_SYMBOLS.sub(' ', text)
-    text = ' '.join(word for word in text.split())  # if word not in STOP_WORDS
-
+    text=re.sub('W*dw*',' ',text)
+    text = ' '.join(word for word in text.split() if word not in STOP_WORDS)  # if word not in STOP_WORDS
+    text=expand_contractions(text)
     return text
-
-# Per rimuovere le etichette di tipo duplicate
-def RemoveDuplicatesType(data):
-    for item in data:
-        vet_type = item["type"]
-        item["type"] = list(set(vet_type))
-
-    return data
-
-def PreProcessing(text):
-    output = " "
-    word_list2 = tokenization(text)
-    for words in word_list2:
-        if not words in stopwords and not words in auxiliary_verbs:
-            output = output + " " + words
-
-    return output
-
-def DistinctLabel(data):
-    result=[]
-    for item in data:
-        for type in item['type']:
-            new_item=item.copy()
-            new_item['type']=[type]
-            result.append(new_item)
-    return result
-
-def tokenization(text):
-    text = text.lower()
-    word_list2 = re.findall(r'\w+', text)
-
-    return word_list2
-
-def createCorpora(data):
-    result = {}
-    for item in data:
-        for type in item['type']:
-            if type in result:
-                result[type] = result[type]+" "+item['question']
-            else:
-                result[type] = item['question']
-
-    max_len=1000
-    min_len=1000
-
-    for type in result:
-        if len(result[type]) < min_len:
-            min_len=len(result[type])
-        if len(result[type]) > max_len:
-            max_len = len(result[type])
-
-    for type in result:
-        if not len(result[type])<500:
-            result[type]=result[type][:500]
-    return result
-
-def StratifiedSampling(data,target,sample_size):
-    splitter = StratifiedShuffleSplit(n_splits=1, test_size=sample_size)
-    train_indices, _ = splitter.split(data, target).__next__()
-
-    sampled_data = [data[i] for i in train_indices]
-
-    return sampled_data
 
 def GetDictionaryOfTypesWithFrequency(types):
     result={}
@@ -123,7 +81,7 @@ def getTipoSpecifico(tipi,type_hierarchy):
     mostSpecific=orderedList[0]['key']
     mostSpecific=mostSpecific.split('/')[-1]
     mostSpecific="dbo:"+mostSpecific
-    return mostSpecific.replace("dbo:","")
+    return mostSpecific
 
 def sorter(e):
     return e['num']

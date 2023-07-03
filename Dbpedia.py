@@ -13,7 +13,9 @@ import nltk
 from nltk.tokenize import word_tokenize
 import numpy as np
 from sklearn.svm import SVC
-from sklearn.svm import LinearSVC
+import evaluator
+from sklearn.preprocessing import MultiLabelBinarizer
+import Classification as cl
 pd.options.mode.chained_assignment = None
 nltk.download('punkt')
 
@@ -70,6 +72,7 @@ def salvaDatasetLavoratoSuFile(dataset,url):
 def leggiDatasetDaFile(url):
     df = pd.read_csv(url)
     return df
+
 def pruningLabelInconsistenti(dataset,treshold):
     # Calcolo della frequenza per ogni possibile label di classe
     dict_l = pr.GetDictionaryOfTypesWithFrequency(dataset.type)  # dizionario tipo,frequenza
@@ -92,51 +95,81 @@ def TokenizeQuestions(dataset):
         sentence=dataset.question[index]
         dataset.question[index] = word_tokenize(sentence)
 
+def PredictAnswers(answer,feature_extraction,model):
+    text=pr.CleanText(answer)
+    text_to_predict= feature_extraction.transform([text])
+    y_pred=model.predict(text_to_predict)[0]
+
+    return y_pred
+
+def GetAllSpecificTypes(y_list,threesold):
+
+    result=[]
+    for label in y_list:
+        type=pr.getTipoSpecifico(label,threesold)
+        result.append(type)
+    return result
+
+def ProcessDataset(dataset,feature_extraction):
+    for index, record in dataset.iterrows():
+        dataset.question[index] = pr.CleanText(record.question)
+
+    X = feature_extraction.fit_transform(dataset["question"].values)
+
+    # convert every labels(list of types) in single string
+    #types_strings = GetAllSpecificTypes(dataset.type,0.1)
+    dataset=trovaLabelSpecifiche(dataset)
+
+    return(X,dataset.type)
+
+def PredictAllTestSet(dataset_test, model, feature_extraction):
+
+    gold_answers={}
+    sys_answers={}
+    for index, record in dataset_test.iterrows():
+        prediction=PredictAnswers(dataset_test.question[index], feature_extraction, model)
+        sys_answers[dataset_test.id[index]]=prediction
+        gold_answers[dataset_test.id[index]] = dataset_test.type[index]
+
+    return gold_answers,sys_answers
 
 if __name__ == '__main__':
 
     """#CODICE PER ELABORARE IL DATASET"""
     dataset = getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-train.json")
-    testset=getRawDatasetFromFile(r"smart-2022-datasets-main\AT_answer_type_prediction\dbpedia\SMART2022-AT-dbpedia-test-risposte.json")
-    #pulizia del testo delle domande
 
-    for index, record in dataset.iterrows():
-        dataset.question[index]=pr.CleanText(record.question)
-    for index, record in testset.iterrows():
-        testset.question[index]=pr.CleanText(record.question)
+    #solo una prova, splitto a metà il dataset e ne uso metà per indurre il modello e metà per predirre. Da togliere
+    half_length = len(dataset) // 2
+    dataset_train= dataset.iloc[:half_length]
+    dataset_test= dataset.iloc[half_length+1:]
 
-    treshold=1.5
-    dataset=pruningLabelInconsistenti(dataset,treshold)
-    testset=pruningLabelInconsistenti(testset,treshold)
-
-    #CAMPIONAMENTO
-    dataset.sample()
-
-    dataset=trovaLabelSpecifiche(dataset)
-    testset=trovaLabelSpecifiche(testset)
-    #TokenizeQuestions(dataset)
-    #SALVATAGGIO DATASET ELABORATO SU FILE
-    #salvaDatasetLavoratoSuFile(dataset,'dataTypeSpecifici.csv')"""
-
-    #CODICE PER LEGGERE UN DATASET GIA ELABORATO
-    #dataset=leggiDatasetDaFile('dataTypeSpecifici.csv')
     feature_extraction = TfidfVectorizer()
-    X = feature_extraction.fit_transform(dataset["question"].values)
-    Y = feature_extraction.fit_transform(testset["question"].values)
+    X, Y = ProcessDataset(dataset_train,feature_extraction) #BLOCCO che si occupa di fare il pre-processing
+                                                            #delle domande e restituisce i tipi specifici per le label
+    print("pre-processing terminato")
 
-    #X_train, X_test, y_train, y_test = train_test_split(X, dataset.type, test_size=0.15, random_state=42)
-    # Creazione dell'istanza del RandomUnderSampler
-    #fit=cl.CreateFit(X_train)
-    #clf = SVC(probability=True, kernel='rbf')
-    #clf.fit(X_train, y_train)
-    model = LinearSVC(tol=1.0e-6, verbose=1)
-    #model.fit(X_train, y_train)
-    model.fit(X, dataset.type)
-    #nb = LogisticRegressionModel(X_train, y_train)
-    y_pred= model.predict(Y)
-    accuracy = accuracy_score(testset.type, y_pred)
-    accuracy_percent = accuracy * 100
-    print('accuracy %s' % accuracy_percent)
+
+    model=cl.LinearSVCModel(X,Y)
+    ##TODO: SaveModel(), ImportModel(path)##
+
+    gold_answers, sys_answers=PredictAllTestSet(dataset_test,model,feature_extraction) #BLOCCO che si occupa di predirre tutto il test set
+    #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
+    #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
+
+    print(gold_answers)
+    print(sys_answers)
+
+    #TODO: EVALUATION
+
+
+    #print("Inizio a valutare")
+    #precisione,recall,f1=evaluator.evaluate_dbpedia(gold_answers, sys_answers)
+    #print("precisione:"+str(precisione))
+    #print("recall:"+str(recall))
+    #print("f1"+str(f1))
+    #accuracy = accuracy_score(testset.type, y_pred)
+    #accuracy_percent = accuracy * 100
+    #print('accuracy %s' % accuracy_percent)
 
 
 
