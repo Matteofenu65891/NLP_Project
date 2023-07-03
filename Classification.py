@@ -2,6 +2,10 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from sklearn.svm import SVC
+from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import TfidfTransformer,TfidfVectorizer
+from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import LogisticRegression
 from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
 from sklearn.svm import LinearSVC
@@ -18,6 +22,33 @@ def NaiveBayesClassification(x,y,fit):
     y=np.array(list(y))
     clf=MultinomialNB()
     return clf.fit(x,y)
+
+def NB_model(x,y):
+
+    nb = Pipeline([('vect', CountVectorizer()),
+                   ('tfidf', TfidfTransformer()),
+                   ('clf', MultinomialNB()),
+                   ])
+    nb.fit(x, y)
+    return nb
+
+def LinearSupportVectorMachine(X_train,y_train):
+    sgd = Pipeline([('vect', CountVectorizer()),
+                    ('tfidf', TfidfVectorizer()),
+                    ('clf',
+                     SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, random_state=42, max_iter=5, tol=None)),
+                    ])
+    sgd.fit(X_train, y_train)
+
+    return sgd
+
+def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 71% sul test set e 99% sul training
+    logreg = Pipeline([('vect', CountVectorizer()),
+                       ('tfidf', TfidfTransformer()),
+                       ('clf', LogisticRegression(n_jobs=1, C=1e5)),
+                       ])
+    logreg.fit(X_train, y_train)
+    return logreg
 
 def PenalizedSVM(dict_forLabel, fit):
     bag_of_words = fit.transform([dict_forLabel[n] for n in list(dict_forLabel.keys())])
