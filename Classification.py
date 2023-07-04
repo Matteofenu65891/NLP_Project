@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
 from sklearn.svm import LinearSVC
+from sklearn.neural_network import MLPClassifier
 
 def CreateFit(x):
     vectorizer=CountVectorizer()
@@ -66,3 +67,9 @@ def LinearSVCModel(X,Y):
     model.fit(X, Y)
     print("Modello creato")
     return model
+
+def NNModel(X,Y):
+    NN_model = MLPClassifier(random_state=1, max_iter=300)
+    NN_model.fit(X,Y)
+
+    return NN_model

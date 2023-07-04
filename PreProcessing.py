@@ -141,15 +141,13 @@ def trovaLabelSpecifiche(dataset):
 def ProcessDataset(dataset):
     for index, record in dataset.iterrows():
         dataset.question[index] = CleanText(record.question)
+    # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
+    #dataset=pruningLabelInconsistenti(dataset,1.5)
+    dataset = trovaLabelSpecifiche(dataset)
+
     vectorizer = TfidfVectorizer()
     dataset_questions = vectorizer.fit_transform(dataset["question"].values)
     pickle.dump(vectorizer, open("Vectorizer/vectorizer.pickle", "wb"))
-
-    # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
-    # dataset=pruningLabelInconsistenti(dataset,1.5)
-
-    dataset = trovaLabelSpecifiche(dataset)
-
     print("pre-processing terminato")
 
     return (dataset_questions, dataset.type)

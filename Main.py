@@ -14,6 +14,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 import Classification as cl
 pd.options.mode.chained_assignment = None
 import pickle
+import Evaluation
 nltk.download('punkt')
 
 def getRawDatasetFromFile(url):
@@ -53,26 +54,22 @@ if __name__ == '__main__':
 
     """#CODICE PER ELABORARE IL DATASET"""
     dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
+    testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
-    #solo una prova, splitto a metà il dataset e ne uso metà per indurre il modello e metà per predire. Da togliere
-    split_point = (len(dataset) // 4)*3
-    dataset_train= dataset.iloc[:split_point]
-    dataset_test= dataset.iloc[split_point+1:]
-
-
-    #X, Y = pr.ProcessDataset(dataset_train) #BLOCCO che si occupa di fare il pre-processing
+    X, Y = pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
                                                             #delle domande e restituisce i tipi specifici per le label
-    #model=cl.LinearSVCModel(X,Y)
+    model=cl.LinearSVCModel(X,Y)
 
     filename = 'linearSVC.sav'
     # save the model to disk
-    #saveModel(model, filename)
+    saveModel(model, filename)
 
     #load model from disk
     model=loadModel(filename)
 
 
-    gold_answers, sys_answers=PredictAllTestSet(dataset_test,model) #BLOCCO che si occupa di predire tutto il test set
+    gold_answers, sys_answers=PredictAllTestSet(testset,model) #BLOCCO che si occupa di predire tutto il test set
+    print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers))
     #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
     #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
 
