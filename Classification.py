@@ -11,6 +11,9 @@ from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
 from sklearn.svm import LinearSVC,SVC
 from sklearn.neural_network import MLPClassifier
+from sklearn import svm
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.svm import SVR
 
 def CreateFit(x):
     vectorizer=CountVectorizer()
@@ -45,10 +48,7 @@ def LinearSupportVectorMachine(X_train,y_train):
     return sgd
 
 def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 71% sul test set e 99% sul training
-    logreg = Pipeline([('vect', CountVectorizer()),
-                       ('tfidf', TfidfTransformer()),
-                       ('clf', LogisticRegression(n_jobs=1, C=1e5)),
-                       ])
+    logreg=LogisticRegression()
     logreg.fit(X_train, y_train)
     return logreg
 
