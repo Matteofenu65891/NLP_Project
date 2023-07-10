@@ -140,7 +140,10 @@ def trovaLabelSpecifiche(dataset):
 
 def ProcessDataset(dataset):
     for index, record in dataset.iterrows():
-        dataset.question[index] = CleanText(record.question)
+        if(record.question!=None and record.question!="" and record.type!=None and record.type!=[]):
+            dataset.question[index] = CleanText(record.question)
+        else:
+            dataset=dataset.drop(index=index)
     # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
     #dataset=pruningLabelInconsistenti(dataset,1.5)
     dataset = trovaLabelSpecifiche(dataset)

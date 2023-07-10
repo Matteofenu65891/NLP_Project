@@ -8,7 +8,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import LogisticRegression
 from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC,SVC
 from sklearn.neural_network import MLPClassifier
 
 def CreateFit(x):
@@ -64,6 +64,12 @@ def PenalizedSVM(dict_forLabel, fit):
 
 def LinearSVCModel(X,Y):
     model = LinearSVC(tol=1.0e-6, verbose=1)
+    model.fit(X, Y)
+    print("Modello creato")
+    return model
+
+def PolinomialSVCModel(X,Y):
+    model = SVC(kernel='poly', degree=3)
     model.fit(X, Y)
     print("Modello creato")
     return model

@@ -9,12 +9,11 @@ from sklearn.model_selection import train_test_split
 import nltk
 import numpy as np
 from sklearn.svm import SVC
-import evaluator
+import Evaluation
 from sklearn.preprocessing import MultiLabelBinarizer
 import Classification as cl
 pd.options.mode.chained_assignment = None
 import pickle
-import Evaluation
 nltk.download('punkt')
 
 def getRawDatasetFromFile(url):
@@ -28,7 +27,6 @@ def PredictAnswers(answer,model):
     vectorizer = pickle.load(open("Vectorizer/vectorizer.pickle", 'rb'))
     text_to_predict= vectorizer.transform([text])
     y_pred=model.predict(text_to_predict)[0]
-
     return y_pred
 
 def PredictAllTestSet(dataset_test, model):
@@ -53,19 +51,20 @@ def loadModel(filename):
 if __name__ == '__main__':
 
     """#CODICE PER ELABORARE IL DATASET"""
-    dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
+    #dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
+    dataset = getRawDatasetFromFile(r"Dataset\smarttask_dbpedia_train.json")
     testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
     X, Y = pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
                                                             #delle domande e restituisce i tipi specifici per le label
     model=cl.LinearSVCModel(X,Y)
 
-    filename = 'linearSVC.sav'
+    filename = 'linearSVC2.sav'
     # save the model to disk
     saveModel(model, filename)
 
     #load model from disk
-    model=loadModel(filename)
+    #model=loadModel(filename)
 
 
     gold_answers, sys_answers=PredictAllTestSet(testset,model) #BLOCCO che si occupa di predire tutto il test set
@@ -82,17 +81,5 @@ if __name__ == '__main__':
 
 
     print("Inizio a valutare")
-    precisione,recall,f1=evaluator.evaluate_dbpedia(gold_answers, sys_answers)
+    precisione=Evaluation.evaluate_dbpedia(gold_answers, sys_answers)
     print("precisione:"+str(precisione))
-    print("recall:"+str(recall))
-    print("f1"+str(f1))
-    #accuracy = accuracy_score(testset.type, y_pred)
-    #accuracy_percent = accuracy * 100
-    #print('accuracy %s' % accuracy_percent)
-
-
-
-
-
-
-
