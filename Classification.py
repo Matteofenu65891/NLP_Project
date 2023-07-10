@@ -1,3 +1,4 @@
+import sklearn.svm
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
@@ -79,3 +80,11 @@ def NNModel(X,Y):
     NN_model.fit(X,Y)
 
     return NN_model
+
+def SVRModel(X,Y):
+    # Creazione dell'istanza del modello SVR
+    svr = SVR(kernel='linear')
+
+    # Addestramento del modello
+    svr.fit(X, Y)
+    return svr

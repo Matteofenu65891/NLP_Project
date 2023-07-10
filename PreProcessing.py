@@ -13,7 +13,8 @@ from sklearn.model_selection import StratifiedShuffleSplit
 import Specificita as sp
 from nltk.stem import PorterStemmer
 import pandas as pd
-
+from sklearn.feature_extraction.text import CountVectorizer
+from scipy.sparse import hstack
 
 
 #CONTSTANT
@@ -50,9 +51,9 @@ def CleanText(text):
     text = text.lower()
     text = RE_SPECIAL_CHAR.sub(' ', text)  # sostituiamo caratteri speciali con spazi
     text = RE_BAD_SYMBOLS.sub(' ', text)
-    text=re.sub('W*dw*',' ',text)
+    #text=re.sub('W*dw*',' ',text)
     #text = ' '.join(word for word in text.split() if word not in STOP_WORDS)  # if word not in STOP_WORDS
-    text=expand_contractions(text)
+    #text=expand_contractions(text)
     return text
 
 #</editor-fold>
@@ -145,14 +146,10 @@ def ProcessDataset(dataset):
         else:
             dataset=dataset.drop(index=index)
     # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
-    #dataset=pruningLabelInconsistenti(dataset,1.5)
     dataset = trovaLabelSpecifiche(dataset)
 
-    vectorizer = TfidfVectorizer()
-    dataset_questions = vectorizer.fit_transform(dataset["question"].values)
-    pickle.dump(vectorizer, open("Vectorizer/vectorizer.pickle", "wb"))
+    #pickle.dump(vectorizer, open("Vectorizer/vectorizer.pickle", "wb"))
     print("pre-processing terminato")
 
-    return (dataset_questions, dataset.type)
 
 

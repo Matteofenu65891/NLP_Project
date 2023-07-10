@@ -14,6 +14,9 @@ from sklearn.preprocessing import MultiLabelBinarizer
 import Classification as cl
 pd.options.mode.chained_assignment = None
 import pickle
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 nltk.download('punkt')
 
 def getRawDatasetFromFile(url):
@@ -22,23 +25,23 @@ def getRawDatasetFromFile(url):
     return pd.DataFrame.from_dict(data, orient='columns')
 
 
-def PredictAnswers(answer,model):
     text=pr.CleanText(answer)
+<<<<<<< Updated upstream
     vectorizer = pickle.load(open("Vectorizer/vectorizer.pickle", 'rb'))
     text_to_predict= vectorizer.transform([text])
     y_pred=model.predict(text_to_predict)[0]
+=======
+    #vectorizer = pickle.load(open("Vectorizer/vectorizer.pickle", 'rb'))
+
+>>>>>>> Stashed changes
     return y_pred
 
-def PredictAllTestSet(dataset_test, model):
 
     gold_answers={}
     sys_answers={}
     for index, record in dataset_test.iterrows():
-        prediction=PredictAnswers(dataset_test.question[index], model)
         sys_answers[dataset_test.id[index]]=prediction
         gold_answers[dataset_test.id[index]] = dataset_test.type[index]
-
-    return gold_answers,sys_answers
 
 def saveModel(model,filename):
     pickle.dump(model, open("Models/"+filename, 'wb'))
@@ -48,6 +51,8 @@ def loadModel(filename):
     loaded_model = pickle.load(open("Models/"+filename, 'rb'))
     return loaded_model
 
+
+
 if __name__ == '__main__':
 
     """#CODICE PER ELABORARE IL DATASET"""
@@ -55,11 +60,12 @@ if __name__ == '__main__':
     dataset = getRawDatasetFromFile(r"Dataset\smarttask_dbpedia_train.json")
     testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
-    X, Y = pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
-                                                            #delle domande e restituisce i tipi specifici per le label
-    model=cl.LinearSVCModel(X,Y)
 
+<<<<<<< Updated upstream
     filename = 'linearSVC2.sav'
+=======
+
+>>>>>>> Stashed changes
     # save the model to disk
     saveModel(model, filename)
 
@@ -67,8 +73,6 @@ if __name__ == '__main__':
     #model=loadModel(filename)
 
 
-    gold_answers, sys_answers=PredictAllTestSet(testset,model) #BLOCCO che si occupa di predire tutto il test set
-    print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers))
     #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
     #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
 
@@ -80,6 +84,19 @@ if __name__ == '__main__':
     #TODO: EVALUATION
 
 
+<<<<<<< Updated upstream
     print("Inizio a valutare")
     precisione=Evaluation.evaluate_dbpedia(gold_answers, sys_answers)
     print("precisione:"+str(precisione))
+=======
+    #accuracy = accuracy_score(testset.type, y_pred)
+    #accuracy_percent = accuracy * 100
+    #print('accuracy %s' % accuracy_percent)
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
