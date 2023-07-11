@@ -167,15 +167,5 @@ def ProcessDatasetForRegression(dataset):
             dataset=dataset.drop(index=index)
     # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
     dataset=pruningLabelInconsistenti(dataset,0.1)
-    dataset = trovaLabelSpecifiche(dataset)
-    print("pre-processing terminato")
 
-    vectorizer=CountVectorizer()
-    X_domanda_encoded = vectorizer.fit_transform(dataset["question"].values)
-
-    label_encoder=LabelEncoder()
-    X_categoria_encoded = label_encoder.fit_transform(dataset["category"].values)
-
-    X_encoded = pd.concat([pd.DataFrame(X_domanda_encoded.toarray()), pd.Series(X_categoria_encoded)], axis=1)
-
-    return (X_encoded, dataset.type,vectorizer,label_encoder)
+    return (dataset.question, dataset.type)

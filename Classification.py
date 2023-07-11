@@ -14,17 +14,14 @@ from sklearn.neural_network import MLPClassifier
 from sklearn import svm
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestClassifier
 
 def CreateFit(x):
     vectorizer=CountVectorizer()
     fit=vectorizer.fit([item for item in x])
     return fit
 
-def NaiveBayesClassification(x,y,fit):
-    bag_of_words = fit.transform([item for item in x])
-    x=bag_of_words.toarray()
-
-    y=np.array(list(y))
+def NaiveBayesClassification(x,y):
     clf=MultinomialNB()
     return clf.fit(x,y)
 
@@ -48,9 +45,9 @@ def LinearSupportVectorMachine(X_train,y_train):
     return sgd
 
 def LogisticRegressionModel(X_train, y_train): #il migliore al momento, 71% sul test set e 99% sul training
-    logreg=LogisticRegression()
-    logreg.fit(X_train, y_train)
-    return logreg
+        logreg=LogisticRegression(solver='saga',multi_class='multinomial',tol=0.1,penalty='l1')
+        logreg.fit(X_train, y_train)
+        return logreg
 
 def PenalizedSVM(dict_forLabel, fit):
     bag_of_words = fit.transform([dict_forLabel[n] for n in list(dict_forLabel.keys())])
@@ -88,3 +85,7 @@ def SVRModel(X,Y):
     # Addestramento del modello
     svr.fit(X, Y)
     return svr
+
+def RandomForestModel(X,Y):
+    rf=RandomForestClassifier()
+    return rf.fit(X,Y)

@@ -55,7 +55,7 @@ def PredictAllTestSet(dataset_test, model,vectorizer1,vectorizer2):
     sys_answers={}
     quest={}
     for index, record in dataset_test.iterrows():
-        prediction=PredictAnswers2(dataset_test.question[index],dataset_test.category[index], model,vectorizer1,vectorizer2)
+        prediction=PredictAnswers(dataset_test.question[index],dataset_test.category[index], model,vectorizer1,vectorizer2)
         sys_answers[dataset_test.id[index]]=prediction
         gold_answers[dataset_test.id[index]] = dataset_test.type[index]
         quest[dataset_test.id[index]]=dataset_test.question[index]
@@ -77,12 +77,12 @@ if __name__ == '__main__':
     dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
     testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
-    X, Y ,vectorizer, label_encoder= pr.ProcessDatasetForRegression(dataset) #BLOCCO che si occupa di fare il pre-processing
+    X, Y,vectorizer1,vectorizer2= pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
                                              #delle domande e restituisce i tipi specifici per le label
 
-    filename = 'LRModel.sav'
+    filename = 'linearSVC.sav'
 
-    model=cl.LogisticRegressionModel(X,Y)
+    model=cl.LinearSVCModel(X,Y)
 
     # save the model to disk
     saveModel(model, filename)
@@ -91,8 +91,10 @@ if __name__ == '__main__':
     model=loadModel(filename)
 
 
-    gold_answers, sys_answers,quest=PredictAllTestSet(testset,model,vectorizer,label_encoder) #BLOCCO che si occupa di predire tutto il test set
-    print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
+    gold_answers, sys_answers,quest=PredictAllTestSet(testset,model,vectorizer1,vectorizer2) #BLOCCO che si occupa di predire tutto il test set
+    #print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
+
+    Evaluation.ValuateType(gold_answers,sys_answers)
     #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
     #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
 
