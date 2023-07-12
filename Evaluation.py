@@ -24,7 +24,7 @@ def evaluate_dbpedia(gold_answers, system_answers,quest):
             print("Prezione su domanda:"+question+" "+prediction)
             print(gold_answer_list)
 
-    print("Predizioni corrette"+str(total_p)+"Su "+str(count))
+    print("Predizioni corrette "+str(total_p)+"Su "+str(count))
     return total_p/count
 
 

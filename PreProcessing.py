@@ -149,15 +149,18 @@ def ProcessDataset(dataset):
     dataset=pruningLabelInconsistenti(dataset,0.1)
     dataset = trovaLabelSpecifiche(dataset)
 
-    vectorizer1 = TfidfVectorizer()
-    vectorizer2=TfidfVectorizer()
+    vectorizer1 = pickle.load(open("Vectorizer/vectorizer1.pickle", 'rb'))
+    vectorizer2 = pickle.load(open("Vectorizer/vectorizer2.pickle", 'rb'))
+    #vectorizer1 = TfidfVectorizer()
+    #vectorizer2=TfidfVectorizer()
     dataset_questions = vectorizer1.fit_transform(dataset["question"].values)
     category_value=vectorizer2.fit_transform(dataset["category"].values)
-    #pickle.dump(vectorizer, open("Vectorizer/vectorizer.pickle", "wb"))
+    #pickle.dump(vectorizer1, open("Vectorizer/vectorizer1.pickle", "wb"))
+    #pickle.dump(vectorizer2, open("Vectorizer/vectorizer2.pickle", "wb"))
     print("pre-processing terminato")
 
     X = hstack((dataset_questions, category_value))
-    return (X.toarray(), dataset.type,vectorizer1,vectorizer2)
+    return (X.toarray(), dataset.type)
 
 def ProcessDatasetNaive(dataset):
     for index, record in dataset.iterrows():
@@ -169,6 +172,8 @@ def ProcessDatasetNaive(dataset):
     dataset=pruningLabelInconsistenti(dataset,0.1)
     dataset=trovaLabelSpecifiche(dataset)
 
-    vectorizer1 = TfidfVectorizer()
-    dataset_questions = vectorizer1.fit_transform(dataset["question"].values)
-    return (dataset_questions, dataset.type,vectorizer1)
+    vectorizer = pickle.load(open("Vectorizer/vectorizerN.pickle", 'rb'))
+    #vectorizer = TfidfVectorizer()
+    dataset_questions = vectorizer.fit_transform(dataset["question"].values)
+    #pickle.dump(vectorizer, open("Vectorizer/vectorizerN.pickle", "wb"))
+    return (dataset_questions, dataset.type)
