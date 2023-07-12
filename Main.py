@@ -36,16 +36,12 @@ def PredictAnswers(answer,category,model,vectorizer1,vectorizer2):
 
     return y_pred
 
-def PredictAnswers2(answer,category,model,vectorizer1,vectorizer2):
-    text=pr.CleanText(answer)
-    vectorizer = pickle.load(open("Vectorizer/vectorizer.pickle", 'rb'))
-    text_to_predict= vectorizer1.transform([text])
-    category=vectorizer2.transform([category])
+def PredictAnswerNaive(answer, model, vectorizer):
+    text = pr.CleanText(answer)
+    #vectorizer = pickle.load(open("Vectorizer/vectorizer.pickle", 'rb'))
+    text_to_predict = vectorizer1.transform([text])
 
-    nuova_domanda_encoded = pd.DataFrame(text_to_predict.toarray())
-    nuova_categoria_encoded = pd.Series(category)
-    nuovi_dati_encoded = pd.concat([nuova_domanda_encoded, nuova_categoria_encoded], axis=1)
-    y_pred=model.predict(nuovi_dati_encoded)[0]
+    y_pred = model.predict(text_to_predict)[0]
 
     return y_pred
 
@@ -56,6 +52,18 @@ def PredictAllTestSet(dataset_test, model,vectorizer1,vectorizer2):
     quest={}
     for index, record in dataset_test.iterrows():
         prediction=PredictAnswers(dataset_test.question[index],dataset_test.category[index], model,vectorizer1,vectorizer2)
+        sys_answers[dataset_test.id[index]]=prediction
+        gold_answers[dataset_test.id[index]] = dataset_test.type[index]
+        quest[dataset_test.id[index]]=dataset_test.question[index]
+    return gold_answers,sys_answers,quest
+
+def PredictAllTestSetNaive(dataset_test, model,vectorizer1):
+
+    gold_answers={}
+    sys_answers={}
+    quest={}
+    for index, record in dataset_test.iterrows():
+        prediction=PredictAnswerNaive(dataset_test.question[index], model,vectorizer1)
         sys_answers[dataset_test.id[index]]=prediction
         gold_answers[dataset_test.id[index]] = dataset_test.type[index]
         quest[dataset_test.id[index]]=dataset_test.question[index]
@@ -77,12 +85,12 @@ if __name__ == '__main__':
     dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
     testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
-    X, Y,vectorizer1,vectorizer2= pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
+    X, Y,vectorizer1= pr.ProcessDatasetNaive(dataset) #BLOCCO che si occupa di fare il pre-processing
                                              #delle domande e restituisce i tipi specifici per le label
 
-    filename = 'linearSVC.sav'
+    filename = 'RfModel.sav'
 
-    model=cl.LinearSVCModel(X,Y)
+    model=cl.RandomForestModel(X,Y)
 
     # save the model to disk
     saveModel(model, filename)
@@ -91,11 +99,11 @@ if __name__ == '__main__':
     model=loadModel(filename)
 
 
-    gold_answers, sys_answers,quest=PredictAllTestSet(testset,model,vectorizer1,vectorizer2) #BLOCCO che si occupa di predire tutto il test set
-    #print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
+    gold_answers, sys_answers,quest=PredictAllTestSetNaive(testset,model,vectorizer1) #BLOCCO che si occupa di predire tutto il test set
+    print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
 
-    dict_frequency=pr.GetDictionaryOfTypesWithFrequency(dataset.type)
-    Evaluation.ValuateType(gold_answers,sys_answers,dict_frequency.keys())
+    #dict_frequency=pr.GetDictionaryOfTypesWithFrequency(dataset.type)
+    #Evaluation.ValuateType(gold_answers,sys_answers,dict_frequency.keys())
     #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
     #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
 

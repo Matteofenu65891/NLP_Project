@@ -159,7 +159,7 @@ def ProcessDataset(dataset):
     X = hstack((dataset_questions, category_value))
     return (X.toarray(), dataset.type,vectorizer1,vectorizer2)
 
-def ProcessDatasetForRegression(dataset):
+def ProcessDatasetNaive(dataset):
     for index, record in dataset.iterrows():
         if(record.question!=None and record.question!="" and record.type!=None and record.type!=[]):
             dataset.question[index] = CleanText(record.question)
@@ -167,5 +167,8 @@ def ProcessDatasetForRegression(dataset):
             dataset=dataset.drop(index=index)
     # pruining label inconsistenti (non lo facciamo più ma l'ho messo)
     dataset=pruningLabelInconsistenti(dataset,0.1)
+    dataset=trovaLabelSpecifiche(dataset)
 
-    return (dataset.question, dataset.type)
+    vectorizer1 = TfidfVectorizer()
+    dataset_questions = vectorizer1.fit_transform(dataset["question"].values)
+    return (dataset_questions, dataset.type,vectorizer1)
