@@ -7,6 +7,7 @@ import telebot
 from telebot import types
 import random
 import pandas as pd
+from aiogram.types  import ReplyKeyboardMarkup,ReplyKeyboardRemove,KeyboardButton
 
 BOT_TOKEN = '6300330428:AAF5n-6htRZQMLyqQ2TMp7f-olVJC861hU8'
 
@@ -14,15 +15,28 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 array_last_predictions = []
 
-model = Main.loadModel('linearSVC.sav')
+model1 = Main.loadModel('LinearSVCNaive.sav')
+model2 = Main.loadModel('LinearSVC.sav')
 
 keyboard = types.InlineKeyboardMarkup()
+
+
+buttonLiteral=types.KeyboardButton("literal",)
+buttonResource = types.KeyboardButton("resource")
+buttonBoolean=types.KeyboardButton("boolean")
+buttonNull=types.KeyboardButton("none")
+
+keyboardButtons= types.ReplyKeyboardMarkup(one_time_keyboard=True)
+keyboardButtons.add(buttonLiteral)
+keyboardButtons.add(buttonResource)
+keyboardButtons.add(buttonBoolean)
+keyboardButtons.add(buttonNull)
 
 last_bot_message = None
 last_user_message = None
 
 def check_if_model_trained():
-    return model is None
+    return model1 is None and model2 is None
 
 
 def error_logger(chat_id, error_message):
@@ -52,7 +66,7 @@ def register_user_feedback(text, label):
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     keyboard_greet = types.InlineKeyboardMarkup()
-    unified_message_sender(message.chat.id, "Hi,make me a question",
+    unified_message_sender(message.chat.id, "Hi, make me a question",
                            keyboard_markup=keyboard_greet)
 
 
@@ -66,14 +80,21 @@ def send_goodbye(message):
 def answer_request(message):
     try:
         if check_if_model_trained():
-            unified_message_sender(message.chat.id, "No trained model")
+            unified_message_sender(message.chat.id, "No model found")
             return
         global last_user_message
-        last_user_message = message
-        text_preprocessed = pp.CleanText(message.text)
+        if(last_user_message==None):
+            last_user_message = message
+            unified_message_sender(message.chat.id, "Can You tell me the category of the answer?", keyboard_markup=keyboardButtons)
+        else:
+            text_preprocessed = pp.CleanText(last_user_message.text)
+            if(message.text=="none"):
+                y_pred = Main.PredictAnswerNaive(text_preprocessed, model1)
+            else:
+                y_pred = Main.PredictAnswers(text_preprocessed,message.text, model2)
 
-        y_pred = Main.PredictAnswers(text_preprocessed,model)
-        unified_message_sender(message.chat.id,y_pred,parse_mode='HTML', keyboard_markup=keyboard)
+            unified_message_sender(message.chat.id, y_pred, parse_mode='HTML', keyboard_markup=keyboard)
+            last_user_message=None
     except Exception as e:
         unified_message_sender(message.chat.id, str(e))
 
