@@ -1,0 +1,611 @@
+Report Precision, recall and f-measure:
+Valutazione per il tipo boolean
+recall: 1.0
+precision: 1.0
+f-measure: 1.0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MusicalWork
+recall: 0.38461538461538464
+precision: 0.7692307692307693
+f-measure: 0.5128205128205128
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Work
+recall: 0.027777777777777776
+precision: 0.7777777777777778
+f-measure: 0.053639846743295014
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo date
+recall: 0.9620253164556962
+precision: 0.95
+f-measure: 0.9559748427672956
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo string
+recall: 0.9314285714285714
+precision: 0.9403846153846154
+f-measure: 0.9358851674641148
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:State
+recall: 0.08928571428571429
+precision: 0.7142857142857143
+f-measure: 0.15873015873015872
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:PopulatedPlace
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Place
+recall: 0.0035971223021582736
+precision: 0.6666666666666666
+f-measure: 0.007155635062611807
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Location
+recall: 0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Country
+recall: 0.5360824742268041
+precision: 0.6797385620915033
+f-measure: 0.5994236311239192
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:AcademicSubject
+recall: 0.4090909090909091
+precision: 0.5625
+f-measure: 0.47368421052631576
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:TopicalConcept
+recall: 0.06741573033707865
+precision: 0.8571428571428571
+f-measure: 0.12499999999999999
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Name
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Organisation
+recall: 0.15759312320916904
+precision: 0.7432432432432432
+f-measure: 0.26004728132387706
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Agent
+recall: 0.008547008547008548
+precision: 0.9
+f-measure: 0.01693320790216369
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Person
+recall: 0.6375545851528385
+precision: 0.711038961038961
+f-measure: 0.6722947045280123
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:WrittenWork
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:EthnicGroup
+recall: 0.1111111111111111
+precision: 0.25
+f-measure: 0.15384615384615383
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Building
+recall: 0.46153846153846156
+precision: 0.41379310344827586
+f-measure: 0.43636363636363634
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:ArchitecturalStructure
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Writer
+recall: 0.35294117647058826
+precision: 0.3333333333333333
+f-measure: 0.34285714285714286
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo number
+recall: 0.9164619164619164
+precision: 0.9164619164619164
+f-measure: 0.9164619164619164
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:AmericanFootballPlayer
+recall: 0.4
+precision: 1.0
+f-measure: 0.5714285714285715
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:GridironFootballPlayer
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Athlete
+recall: 0.32
+precision: 0.8888888888888888
+f-measure: 0.47058823529411764
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:ChemicalCompound
+recall: 0.9
+precision: 0.8333333333333334
+f-measure: 0.8653846153846153
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:ChemicalSubstance
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:OfficeHolder
+recall: 0.5348837209302325
+precision: 0.7931034482758621
+f-measure: 0.6388888888888888
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Politician
+recall: 0.25
+precision: 0.15384615384615385
+f-measure: 0.1904761904761905
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:PeriodicalLiterature
+recall: 0.7894736842105263
+precision: 0.7894736842105263
+f-measure: 0.7894736842105263
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Award
+recall: 0.8625
+precision: 0.7582417582417582
+f-measure: 0.8070175438596491
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Animal
+recall: 0.6
+precision: 0.9
+f-measure: 0.7200000000000001
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Eukaryote
+recall: 0.1111111111111111
+precision: 1.0
+f-measure: 0.19999999999999998
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Species
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Activity
+recall: 0.16326530612244897
+precision: 0.4444444444444444
+f-measure: 0.23880597014925373
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Station
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Infrastructure
+recall: 0.034482758620689655
+precision: 1.0
+f-measure: 0.06666666666666667
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Profession
+recall: 0.14285714285714285
+precision: 0.5
+f-measure: 0.22222222222222224
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:PersonFunction
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Film
+recall: 0.6545454545454545
+precision: 0.5625
+f-measure: 0.6050420168067226
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:City
+recall: 0.7251461988304093
+precision: 0.5610859728506787
+f-measure: 0.6326530612244898
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Settlement
+recall: 0.03482587064676617
+precision: 0.7777777777777778
+f-measure: 0.06666666666666668
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Company
+recall: 0.6854838709677419
+precision: 0.7264957264957265
+f-measure: 0.7053941908713692
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Biomolecule
+recall: 0.8235294117647058
+precision: 0.7777777777777778
+f-measure: 0.7999999999999999
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Event
+recall: 0.03571428571428571
+precision: 0.5
+f-measure: 0.06666666666666667
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:University
+recall: 0.5909090909090909
+precision: 0.5306122448979592
+f-measure: 0.5591397849462366
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:EducationalInstitution
+recall: 0.03508771929824561
+precision: 0.6666666666666666
+f-measure: 0.06666666666666667
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Band
+recall: 0.6666666666666666
+precision: 0.38461538461538464
+f-measure: 0.4878048780487804
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Scientist
+recall: 0.3125
+precision: 0.45454545454545453
+f-measure: 0.3703703703703703
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:PoliticalParty
+recall: 0.8947368421052632
+precision: 0.7391304347826086
+f-measure: 0.8095238095238095
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MusicGenre
+recall: 0.6363636363636364
+precision: 0.2
+f-measure: 0.30434782608695654
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Genre
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Disease
+recall: 0.6578947368421053
+precision: 0.7142857142857143
+f-measure: 0.684931506849315
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:TelevisionShow
+recall: 0.8421052631578947
+precision: 0.9056603773584906
+f-measure: 0.8727272727272727
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Taxon
+recall: 0.54
+precision: 0.7714285714285715
+f-measure: 0.6352941176470589
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Book
+recall: 0.41379310344827586
+precision: 0.42857142857142855
+f-measure: 0.42105263157894735
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MeanOfTransportation
+recall: 0.7
+precision: 0.9333333333333333
+f-measure: 0.8
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Mountain
+recall: 0.375
+precision: 0.6
+f-measure: 0.4615384615384615
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:NaturalPlace
+recall: 0.028169014084507043
+precision: 0.4
+f-measure: 0.05263157894736842
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Village
+recall: 0.6
+precision: 0.6
+f-measure: 0.6
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:River
+recall: 0.8837209302325582
+precision: 0.7037037037037037
+f-measure: 0.7835051546391752
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Stream
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:BodyOfWater
+recall: 0.10909090909090909
+precision: 0.8571428571428571
+f-measure: 0.19354838709677416
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Media
+recall: 0.5625
+precision: 0.6923076923076923
+f-measure: 0.6206896551724138
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Sport
+recall: 0.4
+precision: 0.6153846153846154
+f-measure: 0.4848484848484849
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Game
+recall: 0.6470588235294118
+precision: 0.9166666666666666
+f-measure: 0.7586206896551724
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Region
+recall: 0.2
+precision: 0.6666666666666666
+f-measure: 0.30769230769230765
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MilitaryConflict
+recall: 0.8333333333333334
+precision: 0.5555555555555556
+f-measure: 0.6666666666666667
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SocietalEvent
+recall: 0.2916666666666667
+precision: 0.875
+f-measure: 0.43750000000000006
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SportsTeam
+recall: 0.2647058823529412
+precision: 0.6923076923076923
+f-measure: 0.3829787234042553
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:CelestialBody
+recall: 0.1111111111111111
+precision: 0.6666666666666666
+f-measure: 0.1904761904761905
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:GivenName
+recall: 0.75
+precision: 0.6666666666666666
+f-measure: 0.7058823529411765
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Software
+recall: 0.2916666666666667
+precision: 0.5384615384615384
+f-measure: 0.3783783783783784
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Cleric
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:RouteOfTransportation
+recall: 0.047619047619047616
+precision: 0.3333333333333333
+f-measure: 0.08333333333333333
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SportsEvent
+recall: 0.6
+precision: 0.6
+f-measure: 0.6
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SoccerPlayer
+recall: 0.3333333333333333
+precision: 0.75
+f-measure: 0.46153846153846156
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Royalty
+recall: 0.4
+precision: 0.2857142857142857
+f-measure: 0.3333333333333333
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Bridge
+recall: 0.6875
+precision: 0.7857142857142857
+f-measure: 0.7333333333333334
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Group
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Continent
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MusicalArtist
+recall: 0.3333333333333333
+precision: 0.175
+f-measure: 0.22950819672131145
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Artist
+recall: 0.0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Constellation
+recall: 1.0
+precision: 0.8571428571428571
+f-measure: 0.923076923076923
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:VideoGame
+recall: 0.7777777777777778
+precision: 0.4666666666666667
+f-measure: 0.5833333333333334
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Island
+recall: 0.16666666666666666
+precision: 1.0
+f-measure: 0.2857142857142857
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:BasketballPlayer
+recall: 1.0
+precision: 0.5
+f-measure: 0.6666666666666666
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Language
+recall: 0.5833333333333334
+precision: 0.5
+f-measure: 0.5384615384615384
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:BasketballTeam
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SoccerClub
+recall: 0.14285714285714285
+precision: 0.14285714285714285
+f-measure: 0.14285714285714285
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Album
+recall: 0.7142857142857143
+precision: 0.5
+f-measure: 0.588235294117647
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:RecordLabel
+recall: 0.8571428571428571
+precision: 0.46153846153846156
+f-measure: 0.6
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MilitaryUnit
+recall: 0.7
+precision: 0.3684210526315789
+f-measure: 0.48275862068965514
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Airport
+recall: 0.8
+precision: 0.4444444444444444
+f-measure: 0.5714285714285714
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Single
+recall: 0.7142857142857143
+precision: 0.5555555555555556
+f-measure: 0.6250000000000001
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Currency
+recall: 0.6666666666666666
+precision: 0.8571428571428571
+f-measure: 0.75
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Planet
+recall: 0.8333333333333334
+precision: 0.5
+f-measure: 0.625
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SportsClub
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Town
+recall: 0.25
+precision: 1.0
+f-measure: 0.4
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:BaseballTeam
+recall: 0.7777777777777778
+precision: 1.0
+f-measure: 0.8750000000000001
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Legislature
+recall: 0.5714285714285714
+precision: 0.8
+f-measure: 0.6666666666666666
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:FictionalCharacter
+recall: 0.75
+precision: 0.46153846153846156
+f-measure: 0.5714285714285714
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:AmericanFootballTeam
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:MilitaryPerson
+recall: 0.2
+precision: 0.2
+f-measure: 0.20000000000000004
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Philosopher
+recall: 1.0
+precision: 0.2
+f-measure: 0.33333333333333337
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:School
+recall: 0.25
+precision: 0.3333333333333333
+f-measure: 0.28571428571428575
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Venue
+recall: 0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SportsManager
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:SoccerManager
+recall: 0.6
+precision: 0.6
+f-measure: 0.6
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:AdministrativeRegion
+recall: 0.75
+precision: 0.23076923076923078
+f-measure: 0.3529411764705882
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:ComicsCreator
+recall: 0.6
+precision: 0.75
+f-measure: 0.6666666666666665
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:RugbyPlayer
+recall: 0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Insect
+recall: 0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:BaseballPlayer
+recall: 0.5
+precision: 0.3333333333333333
+f-measure: 0.4
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:CityDistrict
+recall: 0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Star
+recall: 0
+precision: 0.0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Museum
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Mammal
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Noble
+recall: 0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:ChristianBishop
+recall: 0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:TennisPlayer
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 
+Valutazione per il tipo dbo:Saint
+recall: 0.0
+precision: 0
+f-measure: 0
+ - - - - - - - - - - - - - - - - - - - - - - 

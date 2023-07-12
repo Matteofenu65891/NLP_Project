@@ -94,7 +94,8 @@ if __name__ == '__main__':
     gold_answers, sys_answers,quest=PredictAllTestSet(testset,model,vectorizer1,vectorizer2) #BLOCCO che si occupa di predire tutto il test set
     #print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
 
-    Evaluation.ValuateType(gold_answers,sys_answers)
+    dict_frequency=pr.GetDictionaryOfTypesWithFrequency(dataset.type)
+    Evaluation.ValuateType(gold_answers,sys_answers,dict_frequency.keys())
     #gold_answers ->dizionario(id_domanda, lista di tipi corretti)
     #sys_answers ->dizionario(id_domanda, tipo predetto dal modello)
 
