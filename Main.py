@@ -80,9 +80,9 @@ if __name__ == '__main__':
     X, Y= pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
                                              #delle domande e restituisce i tipi specifici per le label
 
-    filename = 'LinearSVC.sav'
+    filename = 'SGD.sav'
 
-    model=cl.LinearSVCModel(X,Y)
+    model=cl.SGDModel(X,Y)
 
     # save the model to disk
     saveModel(model, filename)

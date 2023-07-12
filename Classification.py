@@ -22,7 +22,7 @@ def LinearSVCModel(X,Y):
     return model
 
 def SGDModel(X_train,y_train):
-    sgd = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, random_state=42, max_iter=5, tol=None)
-    sgd.fit(X_train, y_train)
+    clf = SGDClassifier(loss="hinge", penalty="l2")
+    clf.fit(X_train, y_train)
 
-    return sgd
+    return clf
