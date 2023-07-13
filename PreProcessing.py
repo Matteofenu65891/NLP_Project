@@ -1,19 +1,11 @@
 import json
 import pickle
 import re
-import nltk
 from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import TfidfTransformer,TfidfVectorizer
-from imblearn.over_sampling import SMOTE
-from collections import Counter
-from matplotlib import pyplot
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import StratifiedShuffleSplit
 import Specificita as sp
 from nltk.stem import PorterStemmer
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
 from scipy.sparse import hstack
 
 

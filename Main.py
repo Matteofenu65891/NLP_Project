@@ -7,7 +7,6 @@ pd.options.mode.chained_assignment = None
 import pickle
 import Evaluation
 from scipy.sparse import hstack
-from imblearn.over_sampling import SMOTE
 nltk.download('punkt')
 
 def getRawDatasetFromFile(url):
@@ -32,13 +31,11 @@ def PredictAnswerNaive(answer, model):
     text = pr.CleanText(answer)
     vectorizer = pickle.load(open("Vectorizer/vectorizerN.pickle", 'rb'))
     text_to_predict = vectorizer.transform([text])
-
     y_pred = model.predict(text_to_predict)[0]
 
     return y_pred
 
 def PredictAllTestSet(dataset_test, model):
-
     gold_answers={}
     sys_answers={}
     quest={}
@@ -50,7 +47,6 @@ def PredictAllTestSet(dataset_test, model):
     return gold_answers,sys_answers,quest
 
 def PredictAllTestSetNaive(dataset_test, model):
-
     gold_answers={}
     sys_answers={}
     quest={}
@@ -73,25 +69,25 @@ def loadModel(filename):
 
 if __name__ == '__main__':
 
-    """#CODICE PER ELABORARE IL DATASET"""
     dataset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-train.json")
     testset = getRawDatasetFromFile(r"Dataset\SMART2022-AT-dbpedia-test-risposte.json")
 
     X, Y= pr.ProcessDataset(dataset) #BLOCCO che si occupa di fare il pre-processing
-                                             #delle domande e restituisce i tipi specifici per le label
+                                    #delle domande e restituisce i tipi specifici per le label
 
-    filename = 'SGD.sav'
+    filename = 'LinearSVC.sav'
 
-    model=cl.SGDModel(X,Y)
-
+    #train model
+    #model=cl.LinearSVCModel(X,Y)
     # save the model to disk
-    saveModel(model, filename)
+    #saveModel(model, filename)
 
     #load model from disk
-    #model=loadModel(filename)
+    model=loadModel(filename)
 
 
     gold_answers, sys_answers,quest=PredictAllTestSet(testset,model) #BLOCCO che si occupa di predire tutto il test set
+
     print(Evaluation.evaluate_dbpedia(gold_answers,sys_answers,quest))
 
 

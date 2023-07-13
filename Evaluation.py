@@ -1,5 +1,3 @@
-#gold_answers: dict(id_answer, list_of_type)
-#sys_answers: dict(id_answer, more_specific_type)
 literal=['dbo:date','dbo:boolean',"dbo:string","dbo:number"]
 
 #Compute the accuracy of the model
