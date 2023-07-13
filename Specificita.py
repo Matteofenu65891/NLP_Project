@@ -37,7 +37,7 @@ def sort_types(types,type_hierarchy):
         if type_uri not in visited:
             topological_sort(type_uri, visited, stack,type_hierarchy)
 
-    return stack   #[::-1]   Inverte l'ordine dello stack per ottenere l'ordine corretto
+    return stack
 
 
 # Funzione per l'ordinamento topologico
@@ -46,10 +46,6 @@ def topological_sort(node, visited, stack,type_hierarchy):
     countNeighbours=0
     if node in type_hierarchy:
         countNeighbours=len(type_hierarchy[node])
-        #for neighbor in type_hierarchy[node]:
-            #countNeighbours+=1
-            # if neighbor not in visited:
-            #     topological_sort(neighbor, visited, stack,type_hierarchy)
 
     stack.append({'key':node,'num':countNeighbours})
 
